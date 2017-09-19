@@ -1,0 +1,81 @@
+chunksize=16
+
+*** Testing nozip compression.
+before first var define
+before second var define
+create
+
+*** Testing nozip decompression.
+data comparison: |array|=4096
+no data errors
+
+*** Testing API: fpzip compression.
+before first var define
+before second var define
+create
+before first var filter define
+before second var filter define
+FPZIP_ID 32014
+setvarfilter: def/inq mismatch
+before enddef
+can_apply
+dims[0]=16
+dims[1]=16
+dims[2]=16
+after dims
+after chunk check
+set_local
+sizeof hdr_cd_values=24
+fpz prec 32
+write header fine
+modify cd value fine
+can_apply
+dims[0]=16
+dims[1]=16
+dims[2]=16
+after dims
+after chunk check
+set_local
+sizeof hdr_cd_values=24
+fpz prec 16
+write header fine
+modify cd value fine
+after enddef
+filter_fpzip
+get_info_0030
+memcpy
+read_from_buffer
+16 16 16 0
+16,16,0
+bufsize= 17408
+compress
+after malloc
+out_size = 239
+filter_fpzip
+get_info_0030
+memcpy
+read_from_buffer
+16 16 16 0
+16,16,0
+bufsize= 17408
+compress
+after malloc
+out_size = 154
+
+*** Testing API: fpzip decompression.
+Compression parameter mismatch
+filter_fpzip
+get_info_0030
+memcpy
+read_from_buffer
+16 16 16 0
+16,16,0
+bufsize= 17408
+decompress
+after read buffer
+after read header
+nx,ny,nz,nf,type 16,16,16,1,0
+bsize=16384
+newbuf=22fb210
+data comparison: |array|=4096
+no data errors
